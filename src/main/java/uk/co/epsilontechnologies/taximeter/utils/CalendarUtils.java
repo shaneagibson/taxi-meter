@@ -72,13 +72,14 @@ public final class CalendarUtils {
     }
 
     /**
-     * <p>Calculates the difference between the to and from date times, in seconds.
+     * <p>Calculates the absolute difference between the to and from date times, in seconds.
      *
      * @param to the date time to calculate from
      * @param from the date time to calculate to
      * @return the difference in seconds between the from and to date times, as a double
      */
     public static double differenceInSeconds(final DateTime to, final DateTime from) {
-        return (from.getMillis() - to.getMillis()) / 1000d;
+        final double difference = (from.getMillis() - to.getMillis()) / 1000d;
+        return Math.abs(difference);
     }
 }

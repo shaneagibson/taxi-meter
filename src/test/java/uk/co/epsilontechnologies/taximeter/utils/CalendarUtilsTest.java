@@ -26,8 +26,8 @@ public class CalendarUtilsTest {
     public void shouldCalculateDifferenceInSecondsBetweenTwoDateTimes() {
         final DateTime timeA = new DateTime(2000, 1, 1, 12, 0, 5, 250);
         final DateTime timeB = new DateTime(2000, 1, 1, 12, 1, 10, 500);
-        final double differenceInSeconds =  CalendarUtils.differenceInSeconds(timeA, timeB);
-        assertEquals(65.25, differenceInSeconds, 0.001);
+        assertEquals(65.25, CalendarUtils.differenceInSeconds(timeA, timeB), 0.001);
+        assertEquals(65.25, CalendarUtils.differenceInSeconds(timeB, timeA), 0.001);
     }
 
 }
