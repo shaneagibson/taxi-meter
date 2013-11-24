@@ -86,7 +86,7 @@ Source: http://www.tfl.gov.uk/gettingaround/taxisandminicabs/taxis/taxifares/487
 Usage
 -----
 
-The TaxiMeter interface is the representation of the Taxi Meter (implemented by TflTaxiMeter). It exposes the following
+The TaxiMeter interface is the representation of the Taxi Meter. It exposes the following
 key functions:
 
  - Start Journey
@@ -94,6 +94,8 @@ key functions:
  - Reset
  - Get Fare
 
+The TflTaxiMeter implementation requires an Odometer and introduces 1/10th of a second polling to update the fare
+according to the journey duration and distance travelled (provided by the Odometer).
 
 
 Enhancements
