@@ -16,6 +16,7 @@ tariff rules go to the scale of a tenth of a second.
 The key class for the algorithm is uk.co.epsilontechnologies.taximeter.calculator.FareCalculator
 
 '''
+
     public Fare calculateFare(
             final Fare currentFare,
             final BigDecimal journeyDuration,
@@ -42,6 +43,7 @@ The key class for the algorithm is uk.co.epsilontechnologies.taximeter.calculato
 
         return currentFare;
     }
+
 '''
 
 Each update stores the calculated fare against the distance and time that have been accounted for (already paid for).
