@@ -108,3 +108,5 @@ This solution could be enhanced to introduce surcharges, described by the TfL we
 http://www.tfl.gov.uk/gettingaround/taxisandminicabs/taxis/taxifares/1142.aspx
 
 These include Telephone Bookings, Heathrow Extra, Christmas and New Year, Bank Cards and Soiling.
+
+It could also be enhanced to introduce logging and reporting.
