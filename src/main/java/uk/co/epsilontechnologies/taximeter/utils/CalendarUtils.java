@@ -1,8 +1,10 @@
 package uk.co.epsilontechnologies.taximeter.utils;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,14 +74,44 @@ public final class CalendarUtils {
     }
 
     /**
-     * <p>Calculates the absolute difference between the to and from date times, in seconds.
+     * <p>Calculates the difference between the to and from date times, in seconds.
      *
      * @param to the date time to calculate from
      * @param from the date time to calculate to
      * @return the difference in seconds between the from and to date times, as a double
      */
-    public static double differenceInSeconds(final DateTime to, final DateTime from) {
-        final double difference = (from.getMillis() - to.getMillis()) / 1000d;
-        return Math.abs(difference);
+    public static BigDecimal differenceInSeconds(final DateTime to, final DateTime from) {
+        return new BigDecimal(from.getMillis()).subtract(new BigDecimal(to.getMillis())).divide(new BigDecimal("1000"));
     }
+
+    /**
+     * <p>Determines if the given date is a weekday (Monday to Friday).
+     *
+     * @param dateTime the date to check
+     * @return true if given date is a weekday, false otherwise
+     */
+    public static boolean isWeekday(final DateTime dateTime) {
+        return dateTime.getDayOfWeek() >= DateTimeConstants.MONDAY && dateTime.getDayOfWeek() <= DateTimeConstants.FRIDAY;
+    }
+
+    /**
+     * <p>Determines if the given date is a weekend (Saturday or Sunday).
+     *
+     * @param dateTime the date to check
+     * @return true if given date is a weekend, false otherwise
+     */
+    public static boolean isWeekend(final DateTime dateTime) {
+        return dateTime.getDayOfWeek() == DateTimeConstants.SATURDAY || dateTime.getDayOfWeek() == DateTimeConstants.SUNDAY;
+    }
+
+    /**
+     * <p>Determines if the given date time is between the startHour and endHour (on the same day).
+     *
+     * @param dateTime the date/time to check
+     * @return true if given date/time is between the startHour and endHour on the same day, false otherwise
+     */
+    public static boolean isBetweenHours(final DateTime dateTime, final int startHour, final int endHour) {
+        return dateTime.getHourOfDay() >= startHour && dateTime.getHourOfDay() < endHour;
+    }
+
 }

@@ -34,7 +34,4 @@ All taxi fares and tariffs information shown on these pages is effective from Sa
 
 Source: http://www.tfl.gov.uk/gettingaround/taxisandminicabs/taxis/taxifares/4870.aspx
 
-Assumptions
------------
-
 
