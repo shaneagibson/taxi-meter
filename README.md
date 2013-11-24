@@ -49,6 +49,7 @@ Each update stores the calculated fare against the distance and time that have b
 In addition to implementing the algorithm, the tariffs, and the tariff lookup mechanism, I have also provided a
 Taxi Meter implementation to show how this might be applied, and how polling might be achieved.
 
+
 Requirements
 ------------
 
@@ -82,3 +83,10 @@ All taxi fares and tariffs information shown on these pages is effective from Sa
 Source: http://www.tfl.gov.uk/gettingaround/taxisandminicabs/taxis/taxifares/4870.aspx
 
 
+Usage
+-----
+
+The TaxiMeter class is the representation of the TfL London Taxi Meter. It requires an Odometer implementation, and
+exposes the following key functions:
+
+ -

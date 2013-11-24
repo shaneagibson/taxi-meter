@@ -19,13 +19,13 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
- * Test Class for {@link TaxiMeter}.
+ * Test Class for {@link TflTaxiMeter}.
  *
  * @author Shane Gibson
  */
 public class TaxiMeterTest {
 
-    private TaxiMeter underTest;
+    private TflTaxiMeter underTest;
 
     @Mock
     private Poller mockPoller;
@@ -39,7 +39,7 @@ public class TaxiMeterTest {
     @Before
     public void setUp() {
         initMocks(this);
-        this.underTest = new TaxiMeter(mockPoller, mockFareCalculator, mockOdometer);
+        this.underTest = new TflTaxiMeter(mockPoller, mockFareCalculator, mockOdometer);
     }
 
     @Test
