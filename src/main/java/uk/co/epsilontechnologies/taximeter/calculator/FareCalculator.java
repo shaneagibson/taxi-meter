@@ -22,7 +22,7 @@ public class FareCalculator {
     /**
      * Constructor for this fare calculator.
      *
-     * @param tariffLookup the tarrif lookup to use
+     * @param tariffLookup the tariff lookup to use
      */
     public FareCalculator(final TariffLookup tariffLookup) {
         this.tariffLookup = tariffLookup;
