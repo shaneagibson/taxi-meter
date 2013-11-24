@@ -1,12 +1,16 @@
 package uk.co.epsilontechnologies.taximeter.utils;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * <p>Utility Class for Date, Time and Calendar functions.
@@ -16,46 +20,37 @@ import java.util.List;
 public final class CalendarUtils {
 
     /**
+     * List of UK public holidays for 2013, 2014, and 2015.
+     */
+    private static final List<LocalDate> PUBLIC_HOLIDAYS = new ArrayList<>();
+
+    static {
+        loadPublicHolidays();
+    }
+
+    /**
+     * Loads the public holidays from the publicholidays.txt file into an in-memory list.
+     */
+    private static void loadPublicHolidays() {
+        try (final InputStream publicHolidaysTxtInputStream = CalendarUtils.class.getClassLoader().getResourceAsStream("publicholidays.txt")) {
+            final List<String> lines = IOUtils.readLines(publicHolidaysTxtInputStream);
+            for (final String line : lines) {
+                final StringTokenizer stringTokenizer = new StringTokenizer(line, ",");
+                final int year = Integer.parseInt(stringTokenizer.nextToken());
+                final int month = Integer.parseInt(stringTokenizer.nextToken());
+                final int day = Integer.parseInt(stringTokenizer.nextToken());
+                PUBLIC_HOLIDAYS.add(new LocalDate(year, month, day));
+            }
+        } catch (final IOException e) {
+            throw new RuntimeException("Unable to load public holidays: "+e);
+        }
+    }
+
+    /**
      * <p>Hidden default constructor
      */
     private CalendarUtils() {
         super();
-    }
-
-    /**
-     * <p>List of UK public holidays for 2013, 2014, and 2015.
-     */
-    private static final List<LocalDate> PUBLIC_HOLIDAYS = new ArrayList<>();
-
-    // TODO - might want to load these in from a properties file
-    static {
-        PUBLIC_HOLIDAYS.add(new LocalDate(2013, 1, 1));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2013, 3, 28));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2013, 3, 31));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2013, 4, 1));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2013, 5, 6));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2013, 5, 27));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2013, 8, 26));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2013, 12, 25));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2013, 12, 26));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 1, 1));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 4, 18));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 4, 20));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 4, 21));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 5, 5));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 5, 26));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 8, 25));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 12, 25));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 12, 26));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2015, 1, 1));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 4, 3));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 4, 5));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 4, 6));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 5, 4));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 5, 25));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 8, 31));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 12, 25));
-        PUBLIC_HOLIDAYS.add(new LocalDate(2014, 12, 28));
     }
 
     /**

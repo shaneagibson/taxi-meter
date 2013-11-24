@@ -2,6 +2,23 @@
 taxi fare calculator
 =======
 
+Implementation
+--------------
+
+The implementation assumes a 1/10th of a second poll mechanism that commences when the journey is started, and
+terminated when the journey is completed.
+
+This ensures that there is no need to apply recursion or iteration across multiple time or distance ranges, since
+a typical London Taxi doesn't reach speeds of 3211.2 km per hour (89.2 meters per tenth of a second being the smallest
+distance range at which the rate is incremented).
+
+The key class for the algorithm is uk.co.epsilontechnologies.taximeter.calculator.FareCalculator
+
+Each update stores the calculated fare against the distance and time that have been accounted for (already paid for).
+
+In addition to implementing the algorithm, the tariffs, and the tariff lookup mechanism, I have also provided a
+Taxi Meter implementation to show how this might be applied, and how polling might be achieved.
+
 Requirements
 ------------
 
