@@ -8,11 +8,41 @@ Implementation
 The implementation assumes a 1/10th of a second poll mechanism that commences when the journey is started, and
 terminated when the journey is completed.
 
-This ensures that there is no need to apply recursion or iteration across multiple time or distance ranges, since
-a typical London Taxi doesn't reach speeds of 3211.2 km per hour (89.2 meters per tenth of a second being the smallest
-distance range at which the rate is incremented).
+This ensures that there is no need to apply recursion or iteration to calculate fares across multiple time or distance
+ranges, since a typical London Taxi doesn't reach speeds of 3211.2 km per hour (89.2 meters per tenth of a second being
+the smallest distance range at which the rate is incremented). This also ensures accurate fare details since the
+tariff rules go to the scale of a tenth of a second.
 
 The key class for the algorithm is uk.co.epsilontechnologies.taximeter.calculator.FareCalculator
+
+'''
+    public Fare calculateFare(
+            final Fare currentFare,
+            final BigDecimal journeyDuration,
+            final BigDecimal journeyDistance,
+            final DateTime currentTime) {
+
+        final Tariff tariff = tariffLookup.lookupTariff(currentTime);
+
+        if (!tariff.hasMinimumChargeBeenExceeded(journeyDuration, journeyDistance)) {
+            return currentFare;
+        }
+
+        final Tariff.SubTariff subTariff = tariff.isHighFare(currentFare) ? tariff.getHighFareSubTariff() : tariff.getLowFareSubTariff();
+
+        final BigDecimal distanceUnaccountedFor = journeyDistance.subtract(currentFare.getJourneyDistanceAccountedFor());
+        final BigDecimal durationUnaccountedFor = journeyDuration.subtract(currentFare.getJourneyDurationAccountedFor());
+
+        if (distanceUnaccountedFor.compareTo(BigDecimal.ZERO) > 0 || durationUnaccountedFor.compareTo(BigDecimal.ZERO) > 0) {
+            return new Fare(
+                    currentFare.getAmount().add(subTariff.getIncrementAmount()),
+                    currentFare.getJourneyDistanceAccountedFor().add(subTariff.getDistanceLimit()),
+                    currentFare.getJourneyDurationAccountedFor().add(subTariff.getTimeLimit()));
+        }
+
+        return currentFare;
+    }
+'''
 
 Each update stores the calculated fare against the distance and time that have been accounted for (already paid for).
 
