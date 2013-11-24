@@ -71,10 +71,25 @@ public class FareCalculator {
         final BigDecimal durationUnaccountedFor = journeyDuration.subtract(currentFare.getJourneyDurationAccountedFor());
 
         if (distanceUnaccountedFor.compareTo(BigDecimal.ZERO) > 0 || durationUnaccountedFor.compareTo(BigDecimal.ZERO) > 0) {
+
+            // If the distance (or duration) has surpassed the period that has been accounted for, we need to increment the distance
+            // from the start of the period that's been accounted for - otherwise we increment it from the distance (or duration)
+            // of the journey. This insures there are no 'gaps' in the distance (or duration) that has been accounted for.
+
+            final BigDecimal incrementedFare = currentFare.getAmount().add(subTariff.getIncrementAmount());
+
+            final BigDecimal incrementedDistanceAccountedFor =
+                    ((distanceUnaccountedFor.compareTo(BigDecimal.ZERO) > 0) ? currentFare.getJourneyDistanceAccountedFor() : journeyDistance)
+                            .add(subTariff.getDistanceLimit());
+
+            final BigDecimal incrementedDurationAccountedFor =
+                    ((durationUnaccountedFor.compareTo(BigDecimal.ZERO) > 0) ? currentFare.getJourneyDurationAccountedFor() : journeyDuration)
+                            .add(subTariff.getTimeLimit());
+
             return new Fare(
-                    currentFare.getAmount().add(subTariff.getIncrementAmount()),
-                    currentFare.getJourneyDistanceAccountedFor().add(subTariff.getDistanceLimit()),
-                    currentFare.getJourneyDurationAccountedFor().add(subTariff.getTimeLimit()));
+                    incrementedFare,
+                    incrementedDistanceAccountedFor,
+                    incrementedDurationAccountedFor);
         }
 
         return currentFare;

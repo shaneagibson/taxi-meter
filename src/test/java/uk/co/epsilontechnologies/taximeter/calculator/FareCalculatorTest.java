@@ -68,11 +68,11 @@ public class FareCalculatorTest {
         final Fare fare = new Fare(new BigDecimal("2.40"), new BigDecimal("254.6"), new BigDecimal("54.8"));
 
         // act
-        final Fare result = this.underTest.calculateFare(fare, new BigDecimal("60"), new BigDecimal("100"), new DateTime());
+        final Fare result = this.underTest.calculateFare(fare, new BigDecimal("60"), new BigDecimal("250"), new DateTime());
 
         // assert
         assertEquals(new BigDecimal("2.60"), result.getAmount());
-        assertEquals(new BigDecimal("381.9"), result.getJourneyDistanceAccountedFor());
+        assertEquals(new BigDecimal("377.3"), result.getJourneyDistanceAccountedFor());
         assertEquals(new BigDecimal("82.2"), result.getJourneyDurationAccountedFor());
     }
 
@@ -88,7 +88,7 @@ public class FareCalculatorTest {
         // assert
         assertEquals(new BigDecimal("2.60"), result.getAmount());
         assertEquals(new BigDecimal("381.9"), result.getJourneyDistanceAccountedFor());
-        assertEquals(new BigDecimal("82.2"), result.getJourneyDurationAccountedFor());
+        assertEquals(new BigDecimal("67.4"), result.getJourneyDurationAccountedFor());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class FareCalculatorTest {
         // assert
         assertEquals(new BigDecimal("17.40"), result.getAmount());
         assertEquals(new BigDecimal("9764.0"), result.getJourneyDistanceAccountedFor());
-        assertEquals(new BigDecimal("2101.6"), result.getJourneyDurationAccountedFor());
+        assertEquals(new BigDecimal("2101.2"), result.getJourneyDurationAccountedFor());
     }
 
 }

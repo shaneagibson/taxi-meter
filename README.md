@@ -13,7 +13,7 @@ ranges, since a typical London Taxi doesn't reach speeds of 3211.2 km per hour (
 the smallest distance range at which the rate is incremented). This also ensures accurate fare details since the
 tariff rules go to the scale of a tenth of a second.
 
-The key class for the algorithm is uk.co.epsilontechnologies.taximeter.calculator.FareCalculator
+The key class for the algorithm the FareCalculator. The algorithm is:
 
 
     public Fare calculateFare(
@@ -34,14 +34,26 @@ The key class for the algorithm is uk.co.epsilontechnologies.taximeter.calculato
         final BigDecimal durationUnaccountedFor = journeyDuration.subtract(currentFare.getJourneyDurationAccountedFor());
 
         if (distanceUnaccountedFor.compareTo(BigDecimal.ZERO) > 0 || durationUnaccountedFor.compareTo(BigDecimal.ZERO) > 0) {
+
+            final BigDecimal incrementedFare = currentFare.getAmount().add(subTariff.getIncrementAmount());
+
+            final BigDecimal incrementedDistanceAccountedFor =
+                    ((distanceUnaccountedFor.compareTo(BigDecimal.ZERO) > 0) ? currentFare.getJourneyDistanceAccountedFor() : journeyDistance)
+                            .add(subTariff.getDistanceLimit());
+
+            final BigDecimal incrementedDurationAccountedFor =
+                    ((durationUnaccountedFor.compareTo(BigDecimal.ZERO) > 0) ? currentFare.getJourneyDurationAccountedFor() : journeyDuration)
+                            .add(subTariff.getTimeLimit());
+
             return new Fare(
-                    currentFare.getAmount().add(subTariff.getIncrementAmount()),
-                    currentFare.getJourneyDistanceAccountedFor().add(subTariff.getDistanceLimit()),
-                    currentFare.getJourneyDurationAccountedFor().add(subTariff.getTimeLimit()));
+                    incrementedFare,
+                    incrementedDistanceAccountedFor,
+                    incrementedDurationAccountedFor);
         }
 
         return currentFare;
     }
+
 
 
 Each update stores the calculated fare against the distance and time that have been accounted for (already paid for).
