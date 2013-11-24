@@ -13,7 +13,7 @@ ranges, since a typical London Taxi doesn't reach speeds of 3211.2 km per hour (
 the smallest distance range at which the rate is incremented). This also ensures accurate fare details since the
 tariff rules go to the scale of a tenth of a second.
 
-The key class for the algorithm the FareCalculator. The algorithm is:
+The key algorithm is the FareCalculator's calculateFare method:
 
 
     public Fare calculateFare(
