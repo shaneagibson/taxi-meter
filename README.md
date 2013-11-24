@@ -86,7 +86,21 @@ Source: http://www.tfl.gov.uk/gettingaround/taxisandminicabs/taxis/taxifares/487
 Usage
 -----
 
-The TaxiMeter class is the representation of the TfL London Taxi Meter. It requires an Odometer implementation, and
-exposes the following key functions:
+The TaxiMeter interface is the representation of the Taxi Meter (implemented by TflTaxiMeter). It exposes the following
+key functions:
 
- -
+ - Start Journey
+ - End Journey
+ - Reset
+ - Get Fare
+
+
+
+Enhancements
+------------
+
+This solution could be enhanced to introduce surcharges, described by the TfL website:
+
+http://www.tfl.gov.uk/gettingaround/taxisandminicabs/taxis/taxifares/1142.aspx
+
+These include Telephone Bookings, Heathrow Extra, Christmas and New Year, Bank Cards and Soiling.
