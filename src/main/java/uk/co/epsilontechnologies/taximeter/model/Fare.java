@@ -1,5 +1,9 @@
 package uk.co.epsilontechnologies.taximeter.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.math.BigDecimal;
 
 /**
@@ -67,6 +71,30 @@ public class Fare {
      */
     public BigDecimal getJourneyDurationAccountedFor() {
         return journeyDurationAccountedFor;
+    }
+
+    /**
+     * @see Object#equals(Object)
+     */
+    @Override
+    public boolean equals(final Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
+    }
+
+    /**
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }
